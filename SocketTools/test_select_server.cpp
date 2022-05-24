@@ -37,16 +37,21 @@ int main() {
 
     while (true) {
         int res = tokoSelect.do_select();
-        if (res <= 0) {
+        if (res < 0) {
             break;
         }
         for (const auto &fd: tokoSelect.get_fd_list()) {
             bzero(buff, BUFFSIZE);
-            recv(fd, buff, BUFFSIZE - 1, 0);
+            auto len = recv(fd, buff, BUFFSIZE - 1, 0);
+            if (len <= 0) {
+                tokoSelect.close_fd(fd);
+                continue;
+            }
             printf("Recv: %s\n", buff);
             send(fd, buff, strlen(buff), 0);
             if (strcmp(buff, "exit;") == 0) {
                 tokoSelect.close_fd(fd);
+                continue;
             }
         }
     }

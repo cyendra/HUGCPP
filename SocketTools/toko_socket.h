@@ -105,7 +105,7 @@ public:
         FD_ZERO(&_fdsr);//描述符集合清零
         FD_SET(_server_sock_fd, &_fdsr);//添加到描述符集合
         _fd_set.insert(_server_sock_fd);
-        _tv.tv_sec = 600;//超时时间 秒
+        _tv.tv_sec = 1;//超时时间 秒
         _tv.tv_usec = 0;
     }
 
@@ -147,11 +147,11 @@ public:
                 }
 
                 for (int i: _fd_set) {
-                    std::cout << "i=" << i << std::endl;
                     if (i == _server_sock_fd) {
                         continue;
                     }
                     if (FD_ISSET(i, &_cpy_reads)) {
+                        std::cout << "i=" << i << std::endl;
                         result.push_back(i);
                     }
                 }
