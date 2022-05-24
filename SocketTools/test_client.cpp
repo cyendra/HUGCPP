@@ -29,7 +29,7 @@ int main() {
     char buff[BUFFSIZE];
     sockfd = toko::get_client_socket("127.0.0.1", PORT);
     printf("Please input: ");
-    while (true) {
+//    while (true) {
         scanf("%s", buff);
         send(sockfd, buff, strlen(buff), 0);
         bzero(buff, sizeof(buff));
@@ -37,9 +37,9 @@ int main() {
         printf("Recv: %s\n", buff);
         if (strcmp(buff, "exit;") == 0) {
             printf("Break!!");
-            break;
+//            break;
         }
-    }
+//    }
     close(sockfd);
     return 0;
 }
