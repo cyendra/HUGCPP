@@ -25,9 +25,17 @@ void stopServerRunning(int p)
     exit(0);
 }
 
-int main() {
+int main(int argc, char **argv) {
+    int port = PORT;
+    for (int i = 0; i < argc; i++) {
+        std::cout << argv[i] << std::endl;
+    }
+    if (argc == 2) {
+        port = std::stoi(argv[1]);
+    }
+    std::cout << "port: " << port << std::endl;
     char buff[BUFFSIZE];
-    sockfd = toko::get_client_socket("127.0.0.1", PORT);
+    sockfd = toko::get_client_socket("127.0.0.1", port);
     printf("Please input: ");
 //    while (true) {
         scanf("%s", buff);
